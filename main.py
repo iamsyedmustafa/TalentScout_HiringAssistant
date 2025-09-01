@@ -117,13 +117,21 @@ elif st.session_state.step == 2:
         st.subheader(f"Q{st.session_state.current_q + 1}: {q}")
 
         answer = st.text_area("Your answer:", key=f"answer_{st.session_state.current_q}")
-        if st.button("Submit Answer"):
+
+        if st.button("Submit Answer", key=f"submit_{st.session_state.current_q}"):
             if answer.strip():
+                # Save to DB
                 db.insert_response(st.session_state.candidate_id, q, answer.strip())
                 st.session_state.answers[q] = answer.strip()
+
+                # Move to next question
                 st.session_state.current_q += 1
+
+                # Clear input and rerun to show next question
+                st.rerun()
             else:
                 st.warning("⚠️ Please enter an answer before submitting.")
+
     else:
         st.success("🎉 Thank you! Your responses have been recorded. We will reach out to you soon.")
         st.subheader("Your Answers Summary:")
@@ -131,9 +139,11 @@ elif st.session_state.step == 2:
             st.write(f"**Q{i+1}: {q}**")
             st.write(f"**A:** {a}")
 
+
         # ---------------- Send Thank You Email ----------------
         candidate_name = candidate[1]  # name column
         candidate_email = candidate[2]  # email column
         send_thank_you_email(candidate_email, candidate_name)
+
 
 
