@@ -1,3 +1,5 @@
+import sqlite3
+import streamlit as st
 from supabase import create_client, Client
 import os
 
@@ -70,4 +72,5 @@ def get_all_candidates():
     """Fetch all candidates with basic info."""
     response = supabase.table("candidates").select("id, name, email, phone, position, tech_stack").execute()
     return [(c["id"], c["name"], c["email"], c["phone"], c["position"], c["tech_stack"]) for c in response.data]
+
 
