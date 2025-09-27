@@ -19,7 +19,7 @@ if "answers" not in st.session_state:
 if "step" not in st.session_state:
     st.session_state.step = 1  # Step 1: Candidate Info
 
-st.title("💼 Talentscout - AI Hiring Assistant at PGAGI")
+st.title("💼 Talentscout - AI Hiring Assistant")
 
 # ---------------- Helper Functions ----------------
 def is_valid_email(email):
@@ -39,7 +39,7 @@ def send_thank_you_email(to_email, candidate_name):
     and will reach out to you soon.
 
     Best regards,
-    PGAGI Talent Team
+    Talent Team
     """
     try:
         yag = yagmail.SMTP(sender_email, sender_password)
@@ -50,7 +50,7 @@ def send_thank_you_email(to_email, candidate_name):
 
 # ---------------- Step 1: Candidate Info ----------------
 if st.session_state.step == 1:
-    st.info("👋 Hello! I am Talentscout, your AI hiring assistant at PGAGI. Please enter your information to proceed.")
+    st.info("👋 Hello! I am Talentscout, your AI hiring assistant . Please enter your information to proceed.")
 
     with st.form("candidate_form"):
         name = st.text_input("Full Name *")
@@ -144,6 +144,7 @@ elif st.session_state.step == 2:
         candidate_name = candidate[1]  # name column
         candidate_email = candidate[2]  # email column
         send_thank_you_email(candidate_email, candidate_name)
+
 
 
 
